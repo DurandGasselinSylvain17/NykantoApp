@@ -19,7 +19,29 @@ namespace WebAPI.Controllers
         // GET: api/Artisan
         public IQueryable<Artisan> GetArtisans()
         {
-            return db.Artisans;
+            IQueryable<Artisan> query = from tbl in db.Artisans
+                        select tbl;
+
+            foreach (Artisan elem in query)
+            {
+                QualificationArtisan qualif = new QualificationArtisan();
+
+                qualif.Nom = (from tbl in db.QualificationArtisans
+                                                 where tbl.QualificationArtisanID == elem.QualificationArtisanID
+                                                 select tbl.Nom).FirstOrDefault();
+
+                qualif.QualificationArtisanID = (from tbl in db.QualificationArtisans
+                              where tbl.QualificationArtisanID == elem.QualificationArtisanID
+                              select tbl.QualificationArtisanID).FirstOrDefault();
+
+                elem.QualificationArtisan = qualif;
+
+            }
+
+
+            // return db.Artisans.Include(e => e.QualificationArtisan);
+            // return db.Artisans;
+            return query;
         }
 
         // GET: api/Artisan/5
@@ -49,7 +71,19 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(artisan).State = EntityState.Modified;
+            Artisan oldArtisan = new Artisan();
+
+            oldArtisan = (from ligne in db.Artisans
+                          where ligne.ArtisanID == id
+                          select ligne).FirstOrDefault();
+
+            oldArtisan.Nom = artisan.Nom;
+            oldArtisan.QualificationArtisanID = artisan.QualificationArtisanID;
+            // oldArtisan.QualificationArtisan.Nom = artisan.QualificationArtisan.Nom;
+            // oldArtisan.QualificationArtisan.QualificationArtisanID = artisan.QualificationArtisan.QualificationArtisanID;
+
+
+            //db.Entry(artisan).State = EntityState.Modified;
 
             try
             {
@@ -79,7 +113,13 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Artisans.Add(artisan);
+            Artisan newArtisan = new Artisan();
+
+            newArtisan.Nom = artisan.Nom;
+            newArtisan.QualificationArtisanID = artisan.QualificationArtisanID;
+
+
+            db.Artisans.Add(newArtisan);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = artisan.ArtisanID }, artisan);
