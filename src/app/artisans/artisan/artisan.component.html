@@ -1,10 +1,19 @@
-<form #form="ngForm" autocomplete="off" *ngIf="service.formData">
+<h2>Table des artisans</h2>
+
+<form #form="ngForm" autocomplete="off">
+    <!--
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label>Nom</label>
-               <!--  <input name="Nom"  [(ngModel)="service.formData.Nom" class="form-control"> -->
-               <input name="NomNo" ng-model="service.formData.Nom" class="form-control">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        Mr/Mme
+                    </div>
+                    </div> 
+                    <input name="NomNo" ng-model="service.formData.Nom" class="form-control">
+                </div>               
             </div>
           <div class="form-group">
                     <label>Qualification</label>
@@ -12,15 +21,87 @@
             </div> 
           <div class="form-group">
                     <label>Qualification (test)</label>
-                    <select name="NomArtisan2" ng-model="service.formData.QualificationArtisanID" class="form-control">
+                    <select name="NomArtisan2" ng-model="service.formData.QualificationArtisanID" class="form-control" readonly>
                        <option value="0">-Select-</option>
+                       <option value="Test1">-Test1-</option>
+                       <option value="Test2">-Test2-</option>
                     </select>
             </div> 
         </div>
     </div>
     <div class="col-md-6"></div>
+-->
+<!-- Table des artisans -->
+<!--
+<table class="table table-borderless">
+    <thead class="thead-light">
+        <th>Nom</th>
+        <th>Qualification</th>
+        <th>
+            <a href="" class="btn btn-sm btn-success text-white" (click)="AddOrEditArtisan(null)"><i class="fa fa-plus"> </i> Ajouter</a>
+        </th>
+    </thead>
+    <tbody>
+<tr *ngIf="service.artisanItems.length == 0">
+    <td class="font-italic text-center" colspan="2"> 
+        Pas d'artisans trouvés !
+    </td>
+</tr>
+
+<tr *ngFor="let item of service.artisanItems; let i=index;">
+        <td>
+                {{item.Nom}}
+        </td>
+        <td>
+                {{item.QualificationArtisanID}}
+        </td>
+        <td>
+                <a href="" class="btn btn-sm btn-info text-white" (click)="AddOrEditArtisan(item.ArtisanID)"><i class="fa fa-pencil"> </i></a>
+        </td>
+    </tr>
+    </tbody>
+</table> 
+-->
+
+<!-- Table des artisans TRUE -->
+<table class="table table-borderless">
+        <thead class="thead-light">
+            <th>Nom</th>
+            <th>Qualification</th>
+        <!--    <th>QualificationID</th> -->
+            <th>
+                <button mat-raised-button class="btn btn-sm btn-success text-white" (click)="AddOrEditArtisan(null)"><i class="fa fa-plus"></i> Ajouter</button>
+            </th>
+        </thead>
+        <tbody>
+            <!--
+    <tr *ngIf="artisansList.length == 0">
+        <td class="font-italic text-center" colspan="2"> 
+            Pas d'artisans trouvés !
+        </td>
+    </tr>-->
+    <tr *ngFor="let item of artisansList; let i=index;">
+            <td>
+                {{item.Nom}}
+            </td>
+            <td>
+                {{item.QualificationArtisan.Nom}}
+            </td>
+         <!--   <td>
+                    {{item.QualificationArtisan.QualificationArtisanID}}
+                </td>
+            -->
+            <td>
+                    <button mat-raised-button class="btn btn-sm btn-info text-white" (click)="AddOrEditArtisan(item)"><i class="fa fa-pencil"></i></button>
+                    <button mat-raised-button class="btn btn-sm btn-danger text-white ml-3" (click)="DeleteArtisan(item)"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 <div class="form-group">
-    <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Soumettre</button>
+    <button type="submit" class="btn btn-secondary" (click)="ToAdminMenu()"><i class="fa fa-arrow-circle-o-right"></i> Menu Admin</button>
 </div>
 </form>
 
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
