@@ -1,5 +1,7 @@
 # NykantoApp
 Src => Angular
 
-Controllers pour les api .net
+App_Start et Controllers pour les api .net
+
+Le script Sql pour générer la base.
 
