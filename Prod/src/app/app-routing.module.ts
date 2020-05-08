@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule} from '@angular/router'
-import { CommonModule } from '@angular/common';
-
-import { QualificationComponent } from 'angular-cli/Prod/src/app/qualifications/qualification/qualification.component';
+import {Routes, RouterModule} from '@angular/router';
 import { QualificationsComponent } from 'angular-cli/Prod/src/app/qualifications/qualifications.component';
+import { QualificationComponent } from 'angular-cli/Prod/src/app/qualifications/qualification/qualification.component';
+
 const routes: Routes = [
   {path:'',redirectTo:'qualification',pathMatch:'full'},
   {path:'qualification',component:QualificationsComponent},
