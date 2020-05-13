@@ -15,6 +15,9 @@ import { ArtisanItemComponent } from './artisans/artisan-item/artisan-item.compo
 import { QualificationArtisansComponent } from './qualification-artisans/qualification-artisans.component';
 import { QualificationArtisanComponent } from './qualification-artisans/qualification-artisan/qualification-artisan.component';
 import { QualificationArtisanItemComponent } from './qualification-artisans/qualification-artisan-item/qualification-artisan-item.component';
+import { CollectionsComponent } from './collections/collections.component';
+import { CollectionComponent } from './Collections/collection/collection.component';
+import { CollectionItemComponent } from './Collections/collection-item/collection-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { QualificationArtisanItemComponent } from './qualification-artisans/qual
     ArtisanItemComponent,
     QualificationArtisansComponent,
     QualificationArtisanComponent,
-    QualificationArtisanItemComponent
+    QualificationArtisanItemComponent,
+    CollectionsComponent,
+    CollectionComponent,
+    CollectionItemComponent
   ],
   imports: [
     BrowserModule,
