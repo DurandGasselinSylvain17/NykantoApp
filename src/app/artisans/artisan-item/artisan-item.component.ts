@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog,  MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSnackBar} from "@angular/material/snack-bar";
 import { ArtisanItem } from '../../shared/artisan-item.model';
 import { Artisan } from '../../shared/artisan.model';
 import { QualificationArtisan } from '../../shared/qualification.model';
@@ -21,8 +22,18 @@ value:number;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef:MatDialogRef<ArtisanItemComponent>,
-    public service: ArtisanService
-  ) { this.value = null;}
+    public service: ArtisanService,
+    public snackBar: MatSnackBar
+  ) {
+    if (this.data.data == null)
+    {
+      this.value = null;
+    } 
+    else
+    {
+      this.value = this.data.data.QualificationArtisanID;
+    }
+  }
 
   ngOnInit(): void {
 
@@ -53,47 +64,62 @@ value:number;
 }
 
   AddOrEditArtisan(id, form : NgForm){
-
-    var artisan = new Artisan();
-    var artisanComp :ArtisanComponent;
-    var qualif = new QualificationArtisan();
-
-    artisan.ArtisanID = id;
-    artisan.Nom = form.value.NomEditArtisan;
-
-    if(this.value !=  null)
+    if(this.value != null)
     {
-      artisan.QualificationArtisanID = +this.value;
-      qualif.QualificationArtisanID = +this.value;
+      var artisan = new Artisan();
+      var artisanComp :ArtisanComponent;
+      var qualif = new QualificationArtisan();
+
+      artisan.ArtisanID = id;
+      artisan.Nom = form.value.NomEditArtisan;
       qualif.Nom = form.value.QualificationEditArtisan;
+
+      if(id ==  0)
+      {
+        console.log('création : ' + id)
+        artisan.QualificationArtisanID = +this.value + 1;
+        qualif.QualificationArtisanID = +this.value + 1;
+      }
+      else
+      {
+        if(this.data.data.QualificationArtisan.Nom != form.value.QualificationEditArtisan)
+        {
+          artisan.QualificationArtisanID = +this.value + 1;
+          qualif.QualificationArtisanID = +this.value + 1;
+        }
+        else
+        {
+          artisan.QualificationArtisanID = +this.value;
+          qualif.QualificationArtisanID = +this.value;
+        }
+      }
+
       artisan.QualificationArtisan = qualif;
-    }
-    else
-    {
-      artisan.QualificationArtisanID = this.formData.QualificationArtisanID;
-      artisan.QualificationArtisan.QualificationArtisanID = this.formData.QualificationArtisan.QualificationArtisanID;
-      artisan.QualificationArtisan.Nom = this.formData.QualificationArtisan.Nom;
+
+      console.log(artisan);
+
+      if(this.formData.ArtisanID != 0)
+      {
+        console.log('maj');
+        this.service.updateArtisan(artisan);
+        this.refreshData();
+      }
+      else
+      {
+        console.log('création');
+        this.service.createArtisan(artisan);
+        this.refreshData();
+      }
+      this.dialogRef.close();
     }
 
-    console.log(artisan);
+    this.snackBar.open("Pas de qualification saisie, merci de saisir une valeur.", "", { duration: 5000, verticalPosition: 'top', panelClass:['red-snackbar'] })
 
-    if(this.formData.ArtisanID != 0)
-    {
-      console.log('maj');
-    this.service.updateArtisan(artisan);
-    this.refreshData();
-    }
-    else
-    {
-      console.log('création');
-      this.service.createArtisan(artisan);
-      this.refreshData();
-    }
-    this.dialogRef.close();
+
   }
 
-  onChange(cityindex) {
-    this.value = cityindex.substring(0,1);
+  onChange(id) {
+    this.value = id.substring(0,1);
   }
 
   refreshData(){

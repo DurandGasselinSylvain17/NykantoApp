@@ -52,13 +52,14 @@ count:number=0;
 
   DeleteArtisan(data){
     this.service.deleteArtisan(data);
-    this.ngOnInit();
+    this.service.getArtisansList().then(res => this.artisansList = res as Artisan[]);
+    this.service.getArtisansList().then(res => this.artisansList = res as Artisan[]);
   }
 
   ToAdminMenu(url){
     // url = 'A définir dans le html'
 
-    // this.router.navigate([url]).then( (e) => {
+    // this.router.navigate([url, id]).then( (e) => {
       this.router.navigateByUrl(url).then( (e) => {
       if (e) {
         console.log("Navigation is successful!");
@@ -72,7 +73,7 @@ count:number=0;
     
     this.ngOnInit()
     this.count ++ ;
-    console.log('compteur' + this.count)
+    // console.log('compteur' + this.count)
   }
 
 }

@@ -10,7 +10,6 @@
     <div class="form-group">
             <label>Qualification</label>
             <select name="QualificationEditArtisan" [(ngModel)]="formData.QualificationArtisan.Nom" class="form-control" readonly (change)="onChange($event.target.value)"> 
-               <option value="0">-Select-</option>
                <option *ngFor="let item of listQualification; let i=index;" [ngValue]="item.Nom">{{item.Nom}}</option>
             </select>
     </div> 

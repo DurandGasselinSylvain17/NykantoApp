@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +28,8 @@ import { ArtisanItemComponent } from './artisans/artisan-item/artisan-item.compo
     BrowserAnimationsModule,
     MatDialogModule,
     MatSliderModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   entryComponents: [ArtisanItemComponent],
   providers: [ArtisanService],

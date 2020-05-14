@@ -24,11 +24,6 @@ private subject = new Subject<any>();
     return this.http.get(environment.apiURL + 'QualificationArtisans').toPromise();
   }
 
-  getQualificationNom(){
-    // return this.http.get(environment.apiURL + 'QualificationArtisans/' + id).toPromise();
-    return this.http.get(environment.apiURL + 'QualificationArtisans/1').toPromise();;
-  }
-
   updateArtisan(artisan : Artisan){
     return this.http.put(environment.apiURL + 'Artisan/' + artisan.ArtisanID, artisan).subscribe(
       () => {
