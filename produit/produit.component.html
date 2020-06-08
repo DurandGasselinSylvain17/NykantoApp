@@ -1,0 +1,115 @@
+<h2>Table des Produits</h2>
+
+<form #form="ngForm" autocomplete="off" (submit)="TryTest(quantity)">
+
+    <!-- Table des produits TRUE -->
+    <table class="table table-borderless">
+        <thead class="thead-light">
+            <th>Code Produit</th>
+            <th>Nom-Surnom Article</th>
+            <th>Pièce</th>
+            <th>Statut</th>
+            <!--          <th>
+                <button mat-raised-button class="btn btn-sm btn-success text-white" (click)="AddOrEditProduit(null)"><i class="fa fa-plus"></i> Ajouter</button>
+            </th> -->
+            <th>
+                <button mat-raised-button class="btn btn-sm btn-primary text-white" (click)="CreateProduit(null)">
+                    <i class="fa fa-plus-square-o"></i> Nouveau</button>
+            </th>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let item of produitsList; let i=index;">
+                <td>
+                    {{item.CodeBarre}}
+                </td>
+                <td [style.color]="'red'">
+                    {{item.Piece.Article.Nom}}:{{item.Piece.Article.Surnom}}
+
+                </td>
+                <td [style.color]="'green'">
+                    {{item.Piece.Nom}}
+
+                </td>
+
+                <td [style.color]="'blue'">
+                    {{item.StatutProduit.Nom}}
+                </td>
+
+                <td>
+                    <button mat-raised-button class="btn btn-sm btn-success text-white" (click)="ModifyStatusProduit(item)">
+                        <i class="fa fa-check-square-o"></i>
+                    </button>
+                    <button mat-raised-button class="btn btn-sm btn-info text-white ml-3" (click)="AddOrEditProduit(item)">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button mat-raised-button class="btn btn-sm btn-danger text-white ml-3" (click)="DeleteProduit(item)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+
+
+
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+
+
+
+
+<div>
+    <mat-form-field>
+        <mat-label>Filtre</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="...">
+    </mat-form-field>
+
+
+    <table mat-table [dataSource]="dataSource" class="table table-borderless">
+
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef> Nom
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.Nom}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="surnom">
+            <th mat-header-cell *matHeaderCellDef> Surnom
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.Surnom}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="thead-light"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div>
+    <label>Quantité </label>
+    <input name="Quantity" [(ngModel)]="quantity" type="number" (keyup.enter)="TryTest(quantity)">
+</div>
+
+<p>{{resumer}}</p>
+
+<div class="form-group">
+        <button type="submit" class="btn btn-dark" (click)="onClickValider()"><i class="fa fa-database"></i> Valider</button>
+</div>
