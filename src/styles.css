@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .red-snackbar{
@@ -20,5 +23,21 @@
 table.table-hover tbody tr:hover{
     cursor: pointer;
 }
-html, body { height: 100%; }
+
+
+
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+  @media print {
+
+    .isPrinting > * { display: none;}
+    .isPrinting app-print-layout { display: block; float: none}
+
+    div.invoice2 {
+        color: red;
+    }
+
+  }
+

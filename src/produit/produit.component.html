@@ -1,0 +1,57 @@
+<div class="noprint">
+<h2>Table des Produits</h2>
+
+<form #form="ngForm" autocomplete="off">
+    
+<!-- Table des produits TRUE -->
+<table class="table table-borderless">
+        <thead class="thead-light">
+            <th>Code Produit</th>
+            <th>Nom-Surnom Article</th>
+            <th>Pièce</th>
+            <th>Statut</th>
+            <th>
+                <button mat-raised-button class="btn btn-sm btn-success text-white" (click)="AddOrEditProduit(null)"><i class="fa fa-plus"></i> Ajouter</button>
+            </th>
+            <th>
+                <button mat-raised-button class="btn btn-sm btn-primary text-white" (click)="CreateProduit(null)"><i class="fa fa-plus-square-o"></i> Imprimer</button>
+            </th>
+        </thead>
+        <tbody>
+           
+    <tr *ngFor="let item of produitsList; let i=index;">
+            <td>
+                {{item.Code}}
+            </td>
+            <td [style.color]="'red'">
+                {{item.Piece.Article.Nom}}:{{item.Piece.Article.Surnom}}
+
+            </td>
+            <td [style.color]="'green'">
+                
+    {{item.Piece.Nom}} : {{item.Piece.NumPiece}}
+
+            </td>
+            
+            <td [style.color]="'blue'">
+                {{item.StatutProduit.Nom}}
+            </td>
+       
+            <td>
+                <button mat-raised-button class="btn btn-sm btn-success text-white" (click)="ModifyStatusProduit(item)"><i class="fa fa-check-square-o"></i></button>
+                    <button mat-raised-button class="btn btn-sm btn-info text-white ml-3" (click)="AddOrEditProduit(item)"><i class="fa fa-pencil"></i></button>
+                    <button mat-raised-button class="btn btn-sm btn-danger text-white ml-3" (click)="DeleteProduit(item)"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="form-group">
+      
+    <button type="submit" class="btn btn-secondary" (click)="ToAdminMenu(null)"><i class="fa fa-arrow-circle-o-right"></i> Menu Admin</button>
+
+</div>
+</form>
+
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+</div>

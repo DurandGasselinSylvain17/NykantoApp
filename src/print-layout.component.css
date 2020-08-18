@@ -1,0 +1,13 @@
+.content {
+   position: fixed; 
+   left: 0; 
+   top: 0;
+    }
+
+@media screen {
+  :host {
+    display: none;
+  }
+
+}
+
